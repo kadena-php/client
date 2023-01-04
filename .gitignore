@@ -1,0 +1,5 @@
+/.idea
+/pact
+/vendor
+/.phpunit.result.cache
+/storage/ecs_cache/

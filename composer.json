@@ -1,0 +1,35 @@
+{
+    "name": "kadena-php/client",
+    "description": "PHP Client for use with the Kadena Pact API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hergen Dillema",
+            "email": "hergen.dillema@gmail.com",
+            "homepage": "https://hergen.nl"
+        }
+    ],
+    "homepage": "https://github.com/kadena-php/client",
+    "keywords": ["PHP", "Kadena"],
+    "require": {
+        "ext-sodium": "*",
+        "paragonie/halite": "^5.1",
+        "symfony/http-client": "^6.2",
+        "nesbot/carbon": "^2.64"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "~9.0",
+        "symplify/easy-coding-standard": "11.1.33.72"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kadena\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Kadena\\Tests\\": "tests"
+        }
+    }
+}
