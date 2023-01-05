@@ -171,10 +171,10 @@ If you discover any security-related issues, please send an [email](mailto:herge
 
 MIT. Please see the [license file](license.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/hergend/kadena-php.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/hergend/kadena-php.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/kadena-php/client.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/kadena-php/client.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/hergend/kadena-php
-[link-downloads]: https://packagist.org/packages/hergend/kadena-php
+[link-packagist]: https://packagist.org/packages/kadena-php/client
+[link-downloads]: https://packagist.org/packages/kadena-php/client
 [link-author]: https://github.com/hergend
 [link-contributors]: ../../contributors
