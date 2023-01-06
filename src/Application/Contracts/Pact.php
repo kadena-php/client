@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Contracts;
+namespace Kadena\Application\Contracts;
 
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\Domain\Command\SignedCommand;
+use Kadena\Domain\Command\SignedCommandCollection;
+use Kadena\Domain\RequestKey\RequestKey;
+use Kadena\Domain\RequestKey\RequestKeyCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 interface Pact

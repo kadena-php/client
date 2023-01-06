@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto;
+namespace Kadena\Domain\Keypair;
 
-use Kadena\Crypto\Contracts\KeyPair as KeyPairContract;
+use Kadena\Application\Contracts\KeyPair as KeyPairContract;
 use ParagonIE\Halite\Alerts\CannotPerformOperation;
 use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Asymmetric\SignaturePublicKey;

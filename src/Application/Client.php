@@ -1,13 +1,13 @@
 <?php
 
-namespace Kadena;
+namespace Kadena\Application;
 
 use JsonException;
-use Kadena\Contracts\Pact as PactContract;
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\Application\Contracts\Pact as PactContract;
+use Kadena\Domain\Command\SignedCommand;
+use Kadena\Domain\Command\SignedCommandCollection;
+use Kadena\Domain\RequestKey\RequestKey;
+use Kadena\Domain\RequestKey\RequestKeyCollection;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;

@@ -1,10 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Pact;
+namespace Kadena\Domain\Command;
 
 use InvalidArgumentException;
 use JsonException;
-use Kadena\Crypto\SignatureCollection;
+use Kadena\Application\Command;
+use Kadena\Domain\Signature\SignatureCollection;
 
 final class SignedCommand
 {

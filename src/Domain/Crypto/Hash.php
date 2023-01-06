@@ -1,9 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto;
+namespace Kadena\Domain\Crypto;
 
-use Kadena\Crypto\Contracts\Hash as HashContract;
+use Kadena\Application\Contracts\Hash as HashContract;
 use SodiumException;
+use function Kadena\Crypto\sodium_crypto_generichash;
 
 final class Hash implements HashContract
 {

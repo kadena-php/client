@@ -26,7 +26,7 @@ composer require kadena-php/client
 Key Pairs are used to sign your Pact commands. You can generate a new KeyPair using
 
 ```php
-$keyPair = \Kadena\Crypto\KeyPair::generate();
+$keyPair = \Kadena\Domain\Keypair\KeyPair::generate();
 ```
 ### Commands
 Commands are requests sent to the Pact API. 
@@ -110,7 +110,7 @@ Now we have figured out how to create commands and sign them, it's time to use t
 First, create a new API client:
 
 ```php
-$client = new \Kadena\Client('http://localhost:8888'); // or whatever local config you have
+$client = new \Kadena\Application\Client('http://localhost:8888'); // or whatever local config you have
 ```
 The client has a few methods available, 
 see the [Pact API docs](https://api.chainweb.com/openapi/pact.html#tag/endpoint-local) for more information on the different use-cases

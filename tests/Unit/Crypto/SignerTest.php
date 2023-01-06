@@ -3,15 +3,15 @@
 namespace Kadena\Tests\Unit\Crypto;
 
 use Carbon\Carbon;
-use Kadena\Crypto\Hash;
-use Kadena\Crypto\KeyPair;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\Signer;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
+use Kadena\Application\Command;
+use Kadena\Domain\Crypto\Hash;
+use Kadena\Domain\Crypto\Signer;
+use Kadena\Domain\Keypair\KeyPair;
+use Kadena\Domain\Meta\Meta;
+use Kadena\Domain\Payload\ExecutePayload;
+use Kadena\Domain\Payload\Payload;
+use Kadena\Domain\Payload\PayloadType;
+use Kadena\Domain\Signature\Signature;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use PHPUnit\Framework\TestCase;
 

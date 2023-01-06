@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto\Contracts;
+namespace Kadena\Application\Contracts;
 
 interface KeyPair
 {

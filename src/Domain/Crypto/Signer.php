@@ -1,9 +1,11 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto;
+namespace Kadena\Domain\Crypto;
 
-use Kadena\Crypto\Contracts\Signer as SignerContract;
-use Kadena\Pact\Command;
+use Kadena\Application\Command;
+use Kadena\Application\Contracts\Signer as SignerContract;
+use Kadena\Domain\Keypair\KeyPair;
+use Kadena\Domain\Signature\Signature;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use ParagonIE\Halite\Alerts\InvalidSignature;

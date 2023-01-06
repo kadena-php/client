@@ -4,14 +4,14 @@ namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
 use InvalidArgumentException;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\SignedCommand;
+use Kadena\Application\Command;
+use Kadena\Domain\Command\SignedCommand;
+use Kadena\Domain\Meta\Meta;
+use Kadena\Domain\Payload\ExecutePayload;
+use Kadena\Domain\Payload\Payload;
+use Kadena\Domain\Payload\PayloadType;
+use Kadena\Domain\Signature\Signature;
+use Kadena\Domain\Signature\SignatureCollection;
 use PHPUnit\Framework\TestCase;
 
 final class SignedCommandTest extends TestCase

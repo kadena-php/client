@@ -3,7 +3,7 @@
 namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
-use Kadena\Pact\Meta;
+use Kadena\Domain\Meta\Meta;
 use PHPUnit\Framework\TestCase;
 
 final class MetaTest extends TestCase

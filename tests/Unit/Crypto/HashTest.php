@@ -2,7 +2,7 @@
 
 namespace Kadena\Tests\Unit\Crypto;
 
-use Kadena\Crypto\Hash;
+use Kadena\Domain\Crypto\Hash;
 use PHPUnit\Framework\TestCase;
 
 final class HashTest extends TestCase

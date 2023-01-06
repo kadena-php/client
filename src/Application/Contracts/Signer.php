@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto\Contracts;
+namespace Kadena\Application\Contracts;
 
-use Kadena\Crypto\KeyPair;
-use Kadena\Crypto\Signature;
-use Kadena\Pact\Command;
+use Kadena\Application\Command;
+use Kadena\Domain\Keypair\KeyPair;
+use Kadena\Domain\Signature\Signature;
 use ParagonIE\Halite\Asymmetric\SignaturePublicKey;
 
 interface Signer
