@@ -36,18 +36,22 @@ The `networkId` is `null` by default, and when no nonce is set, it will default 
 
 Signers must be present in a signed command, but using the `getSignedCommand` will take care of that for you.
 
-First, let's create a payload and metadata to construct our command:
+First, let's create metadata to construct our command:
 
 ```php
-$metadata = new Meta(
-    creationTime: Carbon::now(),
-    ttl: 0,
-    gasLimit: 0,
-    chainId: '',
-    gasPrice: 0,
-    sender: ''
-);
-
+$metadata = Meta::create();
+```
+The `create()` method takes an optional array of options, options with their default values are:
+```php
+creationTime: Carbon::now(),
+ttl: 7200,
+gasLimit: 10000,
+chainId: '0',
+gasPrice: 1e-8,
+sender: ''
+```
+Then create a payload:
+```php
 $executePayload = new Payload(
     payloadType: PayloadType::EXECUTE,
     executePayload: new ExecutePayload(

@@ -30,7 +30,7 @@ final class Meta
         ];
     }
 
-    public static function create(array $options = []): self
+    public static function create(?array $options = []): self
     {
         return new self(
             creationTime: (isset($options['creationTime'])) ? Carbon::createFromTimestamp((int) $options['creationTime']) : Carbon::now(),
