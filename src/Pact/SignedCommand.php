@@ -35,6 +35,7 @@ final class SignedCommand
         foreach ($this->signatures->toArray() as $signature) {
             $signatures[] = ['sig' => $signature->signature];
         }
+
         return [
             'hash' => $this->hash,
             'sigs' => $signatures,
