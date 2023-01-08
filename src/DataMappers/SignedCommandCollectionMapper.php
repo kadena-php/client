@@ -14,7 +14,7 @@ final class SignedCommandCollectionMapper
     public static function toArray(SignedCommandCollection $commands): array
     {
         return [
-            'cmds' => array_map(static function (SignedCommand $command){
+            'cmds' => array_map(static function (SignedCommand $command) {
                 return SignedCommandMapper::toArray($command);
             }, $commands->toArray())
         ];
