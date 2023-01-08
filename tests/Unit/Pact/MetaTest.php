@@ -3,7 +3,7 @@
 namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
-use Kadena\Pact\Meta;
+use Kadena\ValueObjects\Command\Metadata;
 use PHPUnit\Framework\TestCase;
 
 final class MetaTest extends TestCase
@@ -25,7 +25,7 @@ final class MetaTest extends TestCase
         $gasPrice = 1.25;
         $sender = 'test-sender';
 
-        $meta = new Meta($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
+        $meta = new Metadata($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
         $expectedArray = [
             'creationTime' => $creationTime->getTimestamp(),
             'ttl' => $ttl,
@@ -48,7 +48,7 @@ final class MetaTest extends TestCase
         $gasPrice = 1.25;
         $sender = 'test-sender';
 
-        $expected = new Meta($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
+        $expected = new Metadata($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
 
         $options = [
             'creationTime' => $creationTime->getTimestamp(),
@@ -59,7 +59,7 @@ final class MetaTest extends TestCase
             'sender' => $sender
         ];
 
-        $actual = Meta::create($options);
+        $actual = Metadata::create($options);
 
         $this->assertEquals($expected, $actual);
     }
@@ -74,9 +74,9 @@ final class MetaTest extends TestCase
         $gasPrice = 1e-8;
         $sender = '';
 
-        $expected = new Meta($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
+        $expected = new Metadata($creationTime, $ttl, $gasLimit, $chainId, $gasPrice, $sender);
 
-        $actual = Meta::create();
+        $actual = Metadata::create();
 
         $this->assertEquals($expected, $actual);
     }

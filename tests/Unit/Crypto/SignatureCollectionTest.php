@@ -2,8 +2,8 @@
 
 namespace Kadena\Tests\Unit\Crypto;
 
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
+use Kadena\ValueObjects\Signer\Signature;
+use Kadena\ValueObjects\Signer\SignatureCollection;
 use PHPUnit\Framework\TestCase;
 
 final class SignatureCollectionTest extends TestCase

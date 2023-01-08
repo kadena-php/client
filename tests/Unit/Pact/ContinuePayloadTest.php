@@ -2,7 +2,7 @@
 
 namespace Kadena\Tests\Unit\Pact;
 
-use Kadena\Pact\ContinuePayload;
+use Kadena\ValueObjects\Command\Payload\ContinuePayload;
 use PHPUnit\Framework\TestCase;
 
 final class ContinuePayloadTest extends TestCase

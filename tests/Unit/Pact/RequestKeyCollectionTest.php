@@ -2,8 +2,8 @@
 
 namespace Kadena\Tests\Unit\Pact;
 
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
+use Kadena\ValueObjects\RequestKey\RequestKey;
+use Kadena\ValueObjects\RequestKey\RequestKeyCollection;
 use PHPUnit\Framework\TestCase;
 
 final class RequestKeyCollectionTest extends TestCase

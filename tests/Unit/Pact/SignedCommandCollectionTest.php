@@ -3,15 +3,15 @@
 namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Command\SignedCommandCollection;
+use Kadena\ValueObjects\Signer\Signature;
+use Kadena\ValueObjects\Signer\SignatureCollection;
 use PHPUnit\Framework\TestCase;
 
 final class SignedCommandCollectionTest extends TestCase
@@ -27,7 +27,7 @@ final class SignedCommandCollectionTest extends TestCase
     public function it_should_convert_to_an_array(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -64,7 +64,7 @@ final class SignedCommandCollectionTest extends TestCase
     public function it_should_convert_in_to_a_payload_array(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -115,7 +115,7 @@ final class SignedCommandCollectionTest extends TestCase
     public function it_should_convert_in_to_a_json_payload_string(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,

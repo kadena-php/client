@@ -4,17 +4,17 @@ namespace HergenD\PactPhp\Tests\Unit;
 
 use Carbon\Carbon;
 use Kadena\Client;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Command\SignedCommandCollection;
+use Kadena\ValueObjects\RequestKey\RequestKey;
+use Kadena\ValueObjects\RequestKey\RequestKeyCollection;
+use Kadena\ValueObjects\Signer\Signature;
+use Kadena\ValueObjects\Signer\SignatureCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -28,7 +28,7 @@ final class ClientTest extends TestCase
         parent::setUp();
 
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,

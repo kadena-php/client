@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Pact;
+namespace Kadena\ValueObjects\Command\Payload;
 
 final class ExecutePayload
 {
@@ -8,13 +8,5 @@ final class ExecutePayload
         public readonly string $code,
         public readonly array $data = [],
     ) {
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'data' => $this->data,
-            'code' => $this->code,
-        ];
     }
 }

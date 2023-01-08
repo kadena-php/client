@@ -4,15 +4,15 @@ namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
 use Kadena\Crypto\Hash;
-use Kadena\Crypto\KeyPair;
-use Kadena\Crypto\KeyPairCollection;
-use Kadena\Crypto\Signer;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\SignedCommand;
+use Kadena\Crypto\MessageSigner;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Signer\KeyPair;
+use Kadena\ValueObjects\Signer\KeyPairCollection;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\ConstantTime\Hex;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +30,7 @@ final class CommandTest extends TestCase
     public function it_should_set_nonce_to_current_time_if_not_defined(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -53,7 +53,7 @@ final class CommandTest extends TestCase
     public function it_should_cast_to_array(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -96,7 +96,7 @@ final class CommandTest extends TestCase
     public function it_should_cast_to_string(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -139,7 +139,7 @@ final class CommandTest extends TestCase
     public function it_should_construct_from_string(): void
     {
         $expected = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -182,7 +182,7 @@ final class CommandTest extends TestCase
     public function it_should_be_able_to_set_signers(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -252,7 +252,7 @@ final class CommandTest extends TestCase
     public function it_should_return_a_signed_command_object_when_using_get_signed_command(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -279,6 +279,6 @@ final class CommandTest extends TestCase
 
         $this->assertInstanceOf(SignedCommand::class, $signedCommand);
         $this->assertSame($expectedHash, $signedCommand->hash);
-        $this->assertTrue(Signer::verifySignature(Hash::generic($message), $signedCommand->signatures->first()->signature, $keyPair->publicKey));
+        $this->assertTrue(MessageSigner::verifySignature(Hash::generic($message), $signedCommand->signatures->first()->signature, $keyPair->publicKey));
     }
 }

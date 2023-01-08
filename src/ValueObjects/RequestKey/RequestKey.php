@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Pact;
+namespace Kadena\ValueObjects\RequestKey;
 
 final class RequestKey
 {

@@ -4,14 +4,14 @@ namespace Kadena\Tests\Unit\Pact;
 
 use Carbon\Carbon;
 use InvalidArgumentException;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\SignedCommand;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Signer\Signature;
+use Kadena\ValueObjects\Signer\SignatureCollection;
 use PHPUnit\Framework\TestCase;
 
 final class SignedCommandTest extends TestCase
@@ -27,7 +27,7 @@ final class SignedCommandTest extends TestCase
     public function it_should_create_signed_command_from_string(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -67,7 +67,7 @@ final class SignedCommandTest extends TestCase
     public function it_should_validate_signatures_when_creating(): void
     {
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -113,7 +113,7 @@ final class SignedCommandTest extends TestCase
         $signatureCollection = new SignatureCollection($signature1, $signature2);
 
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -151,7 +151,7 @@ final class SignedCommandTest extends TestCase
         $signatureCollection = new SignatureCollection($signature1, $signature2);
 
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,

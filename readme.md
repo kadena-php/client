@@ -26,7 +26,7 @@ composer require kadena-php/client
 Key Pairs are used to sign your Pact commands. You can generate a new KeyPair using
 
 ```php
-$keyPair = \Kadena\Crypto\KeyPair::generate();
+$keyPair = \Kadena\ValueObjects\Signer\KeyPair::generate();
 ```
 ### Commands
 Commands are requests sent to the Pact API. 

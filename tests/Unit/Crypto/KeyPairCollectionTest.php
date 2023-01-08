@@ -2,8 +2,8 @@
 
 namespace Kadena\Tests\Unit\Crypto;
 
-use Kadena\Crypto\KeyPair;
-use Kadena\Crypto\KeyPairCollection;
+use Kadena\ValueObjects\Signer\KeyPair;
+use Kadena\ValueObjects\Signer\KeyPairCollection;
 use PHPUnit\Framework\TestCase;
 
 final class KeyPairCollectionTest extends TestCase

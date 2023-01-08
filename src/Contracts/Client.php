@@ -2,13 +2,13 @@
 
 namespace Kadena\Contracts;
 
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Command\SignedCommandCollection;
+use Kadena\ValueObjects\RequestKey\RequestKey;
+use Kadena\ValueObjects\RequestKey\RequestKeyCollection;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-interface Pact
+interface Client
 {
     public function send(SignedCommandCollection $commands): RequestKeyCollection;
 

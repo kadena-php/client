@@ -3,11 +3,13 @@
 namespace Kadena;
 
 use JsonException;
-use Kadena\Contracts\Pact as PactContract;
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\Contracts\Client as ClientContract;
+use Kadena\DataMappers\SignedCommandCollectionMapper;
+use Kadena\DataMappers\SignedCommandMapper;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Command\SignedCommandCollection;
+use Kadena\ValueObjects\RequestKey\RequestKey;
+use Kadena\ValueObjects\RequestKey\RequestKeyCollection;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -17,7 +19,7 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
-class Client implements PactContract
+class Client implements ClientContract
 {
     private HttpClientInterface $client;
 
@@ -36,11 +38,12 @@ class Client implements PactContract
      * @throws RedirectionExceptionInterface
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
+     * @throws JsonException
      */
     public function send(SignedCommandCollection $commands): RequestKeyCollection
     {
         $response = $this->client->request('POST', $this->apiUrl . '/api/v1/send', [
-            'json' => $commands->toPayload(),
+            'json' => SignedCommandCollectionMapper::toArray($commands),
         ]);
 
         $requestKeys = array_map(static function (string $requestKey) {
@@ -57,7 +60,7 @@ class Client implements PactContract
     public function local(SignedCommand $command): ResponseInterface
     {
         return $this->client->request('POST', $this->apiUrl . '/api/v1/local', [
-            'json' => $command->toArray(),
+            'json' => SignedCommandMapper::toArray($command),
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Kadena\Tests\Unit\Crypto;
 
-use Kadena\Crypto\KeyPair;
+use Kadena\ValueObjects\Signer\KeyPair;
 use ParagonIE\Halite\Asymmetric\SignaturePublicKey;
 use ParagonIE\Halite\Asymmetric\SignatureSecretKey;
 use PHPUnit\Framework\TestCase;

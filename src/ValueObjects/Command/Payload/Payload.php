@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Pact;
+namespace Kadena\ValueObjects\Command\Payload;
 
 use InvalidArgumentException;
 
@@ -29,14 +29,5 @@ final class Payload
         ) {
             throw new InvalidArgumentException('Only continue payload should be provided when type is \'continue\'');
         }
-    }
-
-    public function toArray(): array
-    {
-        return [
-            $this->payloadType->value =>
-                $this->executePayload?->toArray()
-                ?? $this->continuePayload->toArray(),
-        ];
     }
 }

@@ -3,10 +3,10 @@
 namespace Kadena\Tests\Unit\Pact;
 
 use InvalidArgumentException;
-use Kadena\Pact\ContinuePayload;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
+use Kadena\ValueObjects\Command\Payload\ContinuePayload;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
 use PHPUnit\Framework\TestCase;
 
 final class PayloadTest extends TestCase

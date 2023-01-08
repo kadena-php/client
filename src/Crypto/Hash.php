@@ -2,7 +2,7 @@
 
 namespace Kadena\Crypto;
 
-use Kadena\Crypto\Contracts\Hash as HashContract;
+use Kadena\Contracts\Crypto\Hash as HashContract;
 use SodiumException;
 
 final class Hash implements HashContract

@@ -4,14 +4,14 @@ namespace Kadena\Tests\Unit\Crypto;
 
 use Carbon\Carbon;
 use Kadena\Crypto\Hash;
-use Kadena\Crypto\KeyPair;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\Signer;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
+use Kadena\Crypto\MessageSigner;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Signer\KeyPair;
+use Kadena\ValueObjects\Signer\Signature;
 use ParagonIE\ConstantTime\Base64UrlSafe;
 use PHPUnit\Framework\TestCase;
 
@@ -22,13 +22,13 @@ final class SignerTest extends TestCase
     {
         $message = 'test message';
         $keyPair = KeyPair::generate();
-        $signature = Signer::sign($message, $keyPair);
+        $signature = MessageSigner::sign($message, $keyPair);
 
         $expectedHash = Base64UrlSafe::encodeUnpadded(Hash::generic($message));
 
         $this->assertInstanceOf(Signature::class, $signature);
         $this->assertSame($expectedHash, $signature->hash);
-        $this->assertTrue(Signer::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
+        $this->assertTrue(MessageSigner::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
     }
 
     /** @test */
@@ -37,11 +37,11 @@ final class SignerTest extends TestCase
         $message = 'test message';
         $keyPair = KeyPair::generate();
         $hash = Hash::generic($message);
-        $signature = Signer::signHash($hash, $keyPair);
+        $signature = MessageSigner::signHash($hash, $keyPair);
 
         $this->assertInstanceOf(Signature::class, $signature);
         $this->assertSame(Base64UrlSafe::encodeUnpadded($hash), $signature->hash);
-        $this->assertTrue(Signer::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
+        $this->assertTrue(MessageSigner::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
     }
 
     /** @test */
@@ -49,9 +49,9 @@ final class SignerTest extends TestCase
     {
         $keyPair = KeyPair::generate();
         $message = 'test message';
-        $signature = Signer::sign($message, $keyPair);
+        $signature = MessageSigner::sign($message, $keyPair);
 
-        $this->assertTrue(Signer::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
+        $this->assertTrue(MessageSigner::verifySignature(Hash::generic($message), $signature->signature, $keyPair->publicKey));
     }
 
     /** @test */
@@ -60,7 +60,7 @@ final class SignerTest extends TestCase
         $keyPair = KeyPair::generate();
 
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -76,12 +76,12 @@ final class SignerTest extends TestCase
             )
         );
 
-        $signature = Signer::signCommand($command, $keyPair);
+        $signature = MessageSigner::signCommand($command, $keyPair);
 
         $expectedHash = Base64UrlSafe::encodeUnpadded(Hash::generic($command->toString()));
 
         $this->assertInstanceOf(Signature::class, $signature);
         $this->assertSame($expectedHash, $signature->hash);
-        $this->assertTrue(Signer::verifySignature(Hash::generic($command->toString()), $signature->signature, $keyPair->publicKey));
+        $this->assertTrue(MessageSigner::verifySignature(Hash::generic($command->toString()), $signature->signature, $keyPair->publicKey));
     }
 }

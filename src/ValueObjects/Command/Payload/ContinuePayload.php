@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Pact;
+namespace Kadena\ValueObjects\Command\Payload;
 
 final class ContinuePayload
 {
@@ -11,16 +11,5 @@ final class ContinuePayload
         public readonly ?string $proof = null,
         public readonly array $data = [],
     ) {
-    }
-
-    public function toArray(): array
-    {
-        return [
-            'proof' => $this->proof,
-            'pactId' => $this->pactId,
-            'rollback' => $this->rollback,
-            'step' => $this->step,
-            'data' => $this->data,
-        ];
     }
 }

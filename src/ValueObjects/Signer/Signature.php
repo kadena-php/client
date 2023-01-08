@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Kadena\Crypto;
+namespace Kadena\ValueObjects\Signer;
 
 final class Signature
 {
