@@ -3,7 +3,7 @@
 namespace Kadena\ValueObjects\RequestKey;
 
 use Kadena\Contracts\Collection;
-use Kadena\Traits\HasCollectionMethods;
+use Kadena\ValueObjects\HasCollectionMethods;
 
 final class RequestKeyCollection implements Collection
 {

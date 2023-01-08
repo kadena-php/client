@@ -3,7 +3,7 @@
 namespace Kadena\ValueObjects\Command;
 
 use Kadena\Contracts\Collection;
-use Kadena\Traits\HasCollectionMethods;
+use Kadena\ValueObjects\HasCollectionMethods;
 
 final class SignedCommandCollection implements Collection
 {

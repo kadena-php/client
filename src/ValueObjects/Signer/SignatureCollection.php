@@ -3,7 +3,7 @@
 namespace Kadena\ValueObjects\Signer;
 
 use Kadena\Contracts\Collection;
-use Kadena\Traits\HasCollectionMethods;
+use Kadena\ValueObjects\HasCollectionMethods;
 
 final class SignatureCollection implements Collection
 {
