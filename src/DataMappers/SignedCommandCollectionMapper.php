@@ -3,10 +3,11 @@
 namespace Kadena\DataMappers;
 
 use JsonException;
+use Kadena\Contracts\DataMappers\SignedCommandCollectionMapper as SignedCommandCollectionMapperContract;
 use Kadena\ValueObjects\Command\SignedCommand;
 use Kadena\ValueObjects\Command\SignedCommandCollection;
 
-final class SignedCommandCollectionMapper
+final class SignedCommandCollectionMapper implements SignedCommandCollectionMapperContract
 {
     /**
      * @throws JsonException

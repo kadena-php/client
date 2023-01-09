@@ -3,6 +3,7 @@
 namespace Kadena\Crypto;
 
 use JsonException;
+use Kadena\Contracts\Crypto\CommandSigner as CommandSignerContract;
 use Kadena\DataMappers\CommandMapper;
 use Kadena\ValueObjects\Command\Command;
 use Kadena\ValueObjects\Command\SignedCommand;
@@ -13,7 +14,7 @@ use ParagonIE\ConstantTime\Base64UrlSafe;
 use ParagonIE\Halite\Alerts\InvalidType;
 use SodiumException;
 
-final class CommandSigner
+final class CommandSigner implements CommandSignerContract
 {
     /**
      * @throws InvalidType

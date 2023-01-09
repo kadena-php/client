@@ -5,6 +5,7 @@ namespace Kadena\DataMappers;
 use Carbon\Carbon;
 use InvalidArgumentException;
 use JsonException;
+use Kadena\Contracts\DataMappers\CommandMapper as CommandMapperContract;
 use Kadena\ValueObjects\Command\Command;
 use Kadena\ValueObjects\Command\Metadata;
 use Kadena\ValueObjects\Command\Payload\ContinuePayload;
@@ -21,7 +22,7 @@ use ParagonIE\Halite\Alerts\InvalidKey;
 use ParagonIE\Halite\Asymmetric\SignaturePublicKey;
 use ParagonIE\HiddenString\HiddenString;
 
-final class CommandMapper
+final class CommandMapper implements CommandMapperContract
 {
     public static function toArray(Command $command): array
     {

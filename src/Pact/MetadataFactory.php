@@ -3,9 +3,10 @@
 namespace Kadena\Pact;
 
 use Carbon\Carbon;
+use Kadena\Contracts\Pact\MetadataFactory as MetadataFactoryContract;
 use Kadena\ValueObjects\Command\Metadata;
 
-final class MetadataFactory
+final class MetadataFactory implements MetadataFactoryContract
 {
     private Carbon $creationTime;
     private int $ttl = 7200;

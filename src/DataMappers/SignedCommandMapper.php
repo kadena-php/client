@@ -4,11 +4,12 @@ namespace Kadena\DataMappers;
 
 use InvalidArgumentException;
 use JsonException;
+use Kadena\Contracts\DataMappers\SignedCommandMapper as SignedCommandMapperContract;
 use Kadena\ValueObjects\Command\SignedCommand;
 use Kadena\ValueObjects\Signer\Signature;
 use Kadena\ValueObjects\Signer\SignatureCollection;
 
-final class SignedCommandMapper
+final class SignedCommandMapper implements SignedCommandMapperContract
 {
     /**
      * @throws JsonException
