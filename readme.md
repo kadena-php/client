@@ -9,9 +9,7 @@ Using this package allows you to call things like admin functions in Pact from y
 
 > If your users have to sign a command, something like Kadena.js would still be required on the frontend. This is not a complete replacement.
 
-> ⚠️ This package is under active development and has only been released under versions 0.x.x to allow for testing of the Package. During development, breaking changes might be made in minor version upgrades.
-> 
-> Some features like adding capabilities are still missing.
+> ⚠️ This package is under active development and has no stable production release yet
 
 ## Installation
 
@@ -26,22 +24,11 @@ composer require kadena-php/client
 Key Pairs are used to sign your Pact commands. You can generate a new KeyPair using
 
 ```php
-$keyPair = \Kadena\Crypto\KeyPair::generate();
+$keyPair = KeyFactory::generate();
 ```
-### Commands
-Commands are requests sent to the Pact API. 
-They contain a payload, metadata, signers, network id, and a nonce. 
-When creating a command, only the metadata and payload are required. 
-The `networkId` is `null` by default, and when no nonce is set, it will default to the current time.
-
-Signers must be present in a signed command, but using the `getSignedCommand` will take care of that for you.
-
-First, let's create metadata to construct our command:
-
-```php
-$metadata = Meta::create();
-```
-The `create()` method takes an optional array of options, options with their default values are:
+### Metadata
+Every command sent to the Kadena API requires a metadata object to be present. This object can be created manually, or be constructed using the `MetadataFactory`. 
+The factory will set predefined defaults if certain options are no provided. The defaults and options are as follows:
 ```php
 creationTime: Carbon::now(),
 ttl: 7200,
@@ -50,49 +37,77 @@ chainId: '0',
 gasPrice: 1e-8,
 sender: ''
 ```
-Then create a payload:
+If we want to create an object with the default options but on a different chain, we can do it like this:
 ```php
-$executePayload = new Payload(
-    payloadType: PayloadType::EXECUTE,
-    executePayload: new ExecutePayload(
-        code: '(+ 1 2)'
-    )
+$factory = new MetadataFactory();
+$metadata = $factory->withOptions([
+    'chainId' => '1',
+])->make();
+```
+If no custom options are required, you can just call `$factory->make()` to create your `Metadata` object.
+### Signers
+Commands have to be signed before sending them to the Kadena API. To support this, a `Signer` (one or many) has to be created. A signer consists of a public key and optionally a list of capabilities.
+
+Let's create a signer with a public key of `example-key` and the `coin.transfer` capability. As a signer can have multiple or no capabilities, all `Capability` objects should be wrapped in a `CapabilityCollection` object:
+```php
+// Just as an example, keys should be created using the KeyFactory
+$publicKey = new PublicKey(new SignaturePublicKey(new HiddenString('example-key')));
+
+$transferCapability = new Capability(
+    name: 'coin.transfer',
+    arguments: [
+        'address-from',
+        'address-to',
+        5
+    ]    
 );
 
-$continuePayload = new Payload(
-    payloadType: PayloadType::CONTINUE,
-    executePayload: new ContinuePayload(
-        pactId: 'pact-id',
-        rollback: false,
-        step: 0
-    )
-);
+$signer = new Signer(
+    publicKey: $publicKey,
+    capabilities: new CapabilityCollection($transferCapability) 
+)
 ```
-As you can see there are two payload types, an execute and a continue payload. With these metadata and payload classes, we can construct our commands:
+Multiple signers can be wrapped in the `SignerCollection` object.
+
+### Payloads
+Payloads are the code to be executed by pact. There are two types of payloads: and execute and a continue payload.
 ```php
-$executeCommand = new Command(
-    meta: $metadata,
-    payload: $executePyaload
+$executePayload new ExecutePayload(
+    code: '(+ 1 2)'
 );
 
-$continueCommand = new Command(
-    meta: $metadata,
-    payload: $continuePyaload
+$continuePayload =  new ContinuePayload(
+    pactId: 'pact-id',
+    rollback: false,
+    step: 0
 );
 ```
+
+### Commands
+Commands wrap all data sent to the Kadena API, a `Command` object can be created manually, but it is recommended to use the `CommandFactory` for this.
+The factory will set certain defaults, and can be used like this:
+```php
+$factory = new CommandFactory();
+
+$factory->withExecutePayload($executePayload)
+    ->withMetadata($metadata)
+    ->withSigners(new SignerCollection($signer))
+    ->withNetworkId('mainnet0')
+    ->withNonce('nonce-string')
+    ->make();
+```
+The `withExecutePayload` or the `withContinuePayload` options are always required to create a `Command` object, but all others are optional.
 
 ### Signing Commands
-After creating a command, you can sign it using any number of key pairs. To do this, first, create a `KeyPairCollection` from the key pairs you have. This can be a single key pair or many.
+After creating a command, you can sign it using any number of key pairs. To do this, first, create a `KeyPairCollection` from the key pairs you have. 
+These key pairs should correspond to the signers you added to your account.
 ```php
-$kp1 = KeyPair::generate();
-$kp2 = KeyPair::generate();
-
-$keyPairCollection = new KeyPairCollection($kp1, $kp2);
+$kpc = new KeyPairCollection($keypair);
 ```
 
 Now using these key pairs, we can sign the previously created command
 ```php
-$signedCommand = $command->getSignedCommand($keyPairCollection);
+$signedCommand = CommandSigner::sign($command, $kpc);
 ```
 This returns a new instance of a `SignedCommand`
 
@@ -100,12 +115,12 @@ This returns a new instance of a `SignedCommand`
 Instead of signing the command in the backend, a command might be signed elsewhere (user wallet). 
 A signed command can be reconstructed from a valid Pact command string using:
 ```php
-$signedCommand = SignedCommand::fromString($commandString)
+$signedCommand = SignedCommandMapper::fromString($commandString)
 ```
 A signed command can also be cast to a string or an array using
 ```php
-$signedCommand->toString();
-$signedCommand->toArray();
+$commandString = SignedCommandMapper::toString($signedCommand);
+$commandArray = SignedCommandMapper::toArray($signedCommand);
 ```
 
 ### Using the Client

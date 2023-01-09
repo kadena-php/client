@@ -4,17 +4,24 @@ namespace HergenD\PactPhp\Tests\Unit;
 
 use Carbon\Carbon;
 use Kadena\Client;
-use Kadena\Crypto\Signature;
-use Kadena\Crypto\SignatureCollection;
-use Kadena\Pact\Command;
-use Kadena\Pact\ExecutePayload;
-use Kadena\Pact\Meta;
-use Kadena\Pact\Payload;
-use Kadena\Pact\PayloadType;
-use Kadena\Pact\RequestKey;
-use Kadena\Pact\RequestKeyCollection;
-use Kadena\Pact\SignedCommand;
-use Kadena\Pact\SignedCommandCollection;
+use Kadena\Crypto\KeyFactory;
+use Kadena\DataMappers\SignedCommandCollectionMapper;
+use Kadena\DataMappers\SignedCommandMapper;
+use Kadena\ValueObjects\Command\Command;
+use Kadena\ValueObjects\Command\Metadata;
+use Kadena\ValueObjects\Command\Payload\ExecutePayload;
+use Kadena\ValueObjects\Command\Payload\Payload;
+use Kadena\ValueObjects\Command\Payload\PayloadType;
+use Kadena\ValueObjects\Command\SignedCommand;
+use Kadena\ValueObjects\Command\SignedCommandCollection;
+use Kadena\ValueObjects\RequestKey\RequestKey;
+use Kadena\ValueObjects\RequestKey\RequestKeyCollection;
+use Kadena\ValueObjects\Signer\Capability;
+use Kadena\ValueObjects\Signer\CapabilityCollection;
+use Kadena\ValueObjects\Signer\Signature;
+use Kadena\ValueObjects\Signer\SignatureCollection;
+use Kadena\ValueObjects\Signer\Signer;
+use Kadena\ValueObjects\Signer\SignerCollection;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
@@ -27,8 +34,10 @@ final class ClientTest extends TestCase
     {
         parent::setUp();
 
+        $keyPair = KeyFactory::generate();
+
         $command = new Command(
-            meta: new Meta(
+            meta: new Metadata(
                 creationTime: Carbon::createFromTimestamp(0),
                 ttl: 0,
                 gasLimit: 0,
@@ -41,26 +50,34 @@ final class ClientTest extends TestCase
                 executePayload: new ExecutePayload(
                     code: '(+ 2 2)'
                 )
-            )
+            ),
+            networkId: 'testnet0',
+            nonce: 'test',
+            signers: new SignerCollection(new Signer(
+                publicKey: $keyPair->publicKey,
+                capabilities: new CapabilityCollection(
+                    new Capability(
+                        name: 'cap.example',
+                        arguments: []
+                    )
+                )
+            ))
         );
 
-        $command->setSigners(['public-key']);
-
-        $signature = new Signature(
-            hash: 'hash',
-            signature: 'signature',
-            publicKey: 'public-key',
+        $this->signedCommand = new SignedCommand(
+            hash: 'test-hash',
+            signatures: new SignatureCollection(new Signature(
+                hash: 'test-hash',
+                signature: 'test-signature'
+            )),
+            command: $command
         );
-
-        $signatures = new SignatureCollection($signature);
-
-        $this->signedCommand = new SignedCommand('hash', $signatures, $command);
     }
 
     /** @test */
     public function it_should_send_a_signed_command_to_the_local_endpoint_and_return_a_response_object(): void
     {
-        $expectedRequestData = $this->signedCommand->toArray();
+        $expectedRequestData = SignedCommandMapper::toArray($this->signedCommand);
 
         $expectedResponseData = [
             'gas' => 123,
@@ -116,7 +133,7 @@ final class ClientTest extends TestCase
     /** @test */
     public function it_should_send_a_collection_of_signed_commands_to_the_send_endpoint_and_return_a_collection_of_request_keys(): void
     {
-        $expectedRequestData = (new SignedCommandCollection($this->signedCommand))->toPayload();
+        $expectedRequestData = SignedCommandCollectionMapper::toArray(new SignedCommandCollection($this->signedCommand));
 
         $requestKeyString = 'y3aWL72-3wAy7vL9wcegGXnstH0lHi-q-cfxkhD5JCw';
 
