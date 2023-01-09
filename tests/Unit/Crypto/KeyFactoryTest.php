@@ -45,7 +45,6 @@ final class KeyFactoryTest extends TestCase
         $this->assertEquals($keyPair->publicKey->key->getRawKeyMaterial(), $actual->key->getRawKeyMaterial());
     }
 
-
     /** @test */
     public function it_should_create_a_secret_key_from_a_binary_string(): void
     {
