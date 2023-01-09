@@ -13,8 +13,13 @@ use Kadena\ValueObjects\Command\Payload\Payload;
 use Kadena\ValueObjects\Command\Payload\PayloadType;
 use Kadena\ValueObjects\Signer\Capability;
 use Kadena\ValueObjects\Signer\CapabilityCollection;
+use Kadena\ValueObjects\Signer\PublicKey;
 use Kadena\ValueObjects\Signer\Signer;
 use Kadena\ValueObjects\Signer\SignerCollection;
+use ParagonIE\ConstantTime\Hex;
+use ParagonIE\Halite\Alerts\InvalidKey;
+use ParagonIE\Halite\Asymmetric\SignaturePublicKey;
+use ParagonIE\HiddenString\HiddenString;
 
 final class CommandMapper
 {
@@ -95,6 +100,7 @@ final class CommandMapper
 
     /**
      * @throws JsonException
+     * @throws InvalidKey
      */
     public static function fromString(string $commandJson): Command
     {
@@ -169,7 +175,7 @@ final class CommandMapper
             }
 
             $signers[] = new Signer(
-                publicKey: $signer->pubKey,
+                publicKey: new PublicKey(new SignaturePublicKey(new HiddenString(Hex::decode($signer->pubKey)))),
                 capabilities: new CapabilityCollection(...$capabilities)
             );
         }

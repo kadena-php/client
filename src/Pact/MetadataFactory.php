@@ -17,9 +17,9 @@ final class MetadataFactory
     public function withOptions(array $options): self
     {
         foreach ($options as $key => $option) {
-            if (in_array($key, get_class_vars(self::class), true)) {
+            if (in_array($key, array_keys(get_class_vars(self::class)), true)) {
                 if ($key === 'creationTime' && ! is_a($option, Carbon::class)) {
-                    $this->$key = Carbon::createFromTimestamp($option);
+                    $this->$key = Carbon::createFromTimestamp((int) $option);
                 } else {
                     $this->$key = $option;
                 }
