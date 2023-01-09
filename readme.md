@@ -9,9 +9,7 @@ Using this package allows you to call things like admin functions in Pact from y
 
 > If your users have to sign a command, something like Kadena.js would still be required on the frontend. This is not a complete replacement.
 
-> ⚠️ This package is under active development and has only been released under versions 0.x.x to allow for testing of the Package. During development, breaking changes might be made in minor version upgrades.
-> 
-> Some features like adding capabilities are still missing.
+> ⚠️ This package is under active development and has no stable production release yet
 
 ## Installation
 
