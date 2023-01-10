@@ -50,8 +50,7 @@ Commands have to be signed before sending them to the Kadena API. To support thi
 
 Let's create a signer with a public key of `example-key` and the `coin.transfer` capability. As a signer can have multiple or no capabilities, all `Capability` objects should be wrapped in a `CapabilityCollection` object:
 ```php
-// Just as an example, keys should be created using the KeyFactory
-$publicKey = new PublicKey(new SignaturePublicKey(new HiddenString('example-key')));
+$publicKey = KeyFactory::publicKeyFromHex('not-a-real-key');
 
 $transferCapability = new Capability(
     name: 'coin.transfer',
